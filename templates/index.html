@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        NHAA AI Speech Assessment
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            font-family:
+                Inter,
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4f7fb;
+
+            color:
+                #172033;
+
+        }
+
+
+        .container {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: 0 auto;
+
+            padding: 50px 25px;
+
+        }
+
+
+        /* ==================================================
+           HEADER
+        ================================================== */
+
+        .header {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .badge {
+
+            display: inline-block;
+
+            padding:
+                6px 12px;
+
+            border-radius:
+                20px;
+
+            background:
+                #eaf3ff;
+
+            color:
+                #174a8b;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        h1 {
+
+            margin:
+                0 0 10px 0;
+
+            font-size:
+                34px;
+
+            color:
+                #174a8b;
+
+        }
+
+
+        .subtitle {
+
+            margin: 0;
+
+            color:
+                #667085;
+
+            font-size:
+                16px;
+
+            line-height:
+                1.6;
+
+        }
+
+
+        /* ==================================================
+           MAIN CARD
+        ================================================== */
+
+        .card {
+
+            background:
+                white;
+
+            border-radius:
+                16px;
+
+            padding:
+                30px;
+
+            box-shadow:
+                0 8px 30px
+                rgba(20, 40, 80, 0.08);
+
+            border:
+                1px solid #e8edf5;
+
+        }
+
+
+        /* ==================================================
+           UPLOAD AREA
+        ================================================== */
+
+        .upload-area {
+
+            border:
+                2px dashed #b9c8dc;
+
+            border-radius:
+                14px;
+
+            padding:
+                45px 25px;
+
+            text-align:
+                center;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .upload-area:hover {
+
+            border-color:
+                #174a8b;
+
+            background:
+                #fafcff;
+
+        }
+
+
+        .upload-icon {
+
+            font-size:
+                42px;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .upload-title {
+
+            font-size:
+                18px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .upload-description {
+
+            color:
+                #667085;
+
+            font-size:
+                14px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        input[type="file"] {
+
+            width:
+                100%;
+
+            max-width:
+                400px;
+
+            padding:
+                10px;
+
+            border:
+                1px solid #d0d5dd;
+
+            border-radius:
+                8px;
+
+            background:
+                white;
+
+        }
+
+
+        /* ==================================================
+           BUTTON
+        ================================================== */
+
+        .button {
+
+            display:
+                block;
+
+            width:
+                100%;
+
+            margin-top:
+                20px;
+
+            padding:
+                14px 20px;
+
+            border:
+                none;
+
+            border-radius:
+                9px;
+
+            background:
+                #174a8b;
+
+            color:
+                white;
+
+            font-size:
+                16px;
+
+            font-weight:
+                600;
+
+            cursor:
+                pointer;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .button:hover {
+
+            background:
+                #123c71;
+
+        }
+
+
+        .button:disabled {
+
+            background:
+                #98a2b3;
+
+            cursor:
+                not-allowed;
+
+        }
+
+
+        /* ==================================================
+           LOADING
+        ================================================== */
+
+        .loading {
+
+            display:
+                none;
+
+            text-align:
+                center;
+
+            padding:
+                30px 10px;
+
+        }
+
+
+        .spinner {
+
+            width:
+                35px;
+
+            height:
+                35px;
+
+            border:
+                4px solid #e5e7eb;
+
+            border-top:
+                4px solid #174a8b;
+
+            border-radius:
+                50%;
+
+            animation:
+                spin 0.8s linear infinite;
+
+            margin:
+                0 auto 15px auto;
+
+        }
+
+
+        @keyframes spin {
+
+            from {
+                transform:
+                    rotate(0deg);
+            }
+
+            to {
+                transform:
+                    rotate(360deg);
+            }
+
+        }
+
+
+        /* ==================================================
+           RESULT
+        ================================================== */
+
+        .result {
+
+            display:
+                none;
+
+            margin-top:
+                30px;
+
+        }
+
+
+        .result-header {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .result-header h2 {
+
+            margin:
+                0;
+
+            font-size:
+                22px;
+
+        }
+
+
+        .file-name {
+
+            color:
+                #667085;
+
+            font-size:
+                13px;
+
+            word-break:
+                break-all;
+
+            text-align:
+                right;
+
+        }
+
+
+        /* ==================================================
+           TOP EMOTION
+        ================================================== */
+
+        .top-emotion {
+
+            background:
+                #eef8f1;
+
+            border:
+                1px solid #cce8d4;
+
+            border-radius:
+                12px;
+
+            padding:
+                25px;
+
+            text-align:
+                center;
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .top-label {
+
+            color:
+                #667085;
+
+            font-size:
+                13px;
+
+            text-transform:
+                uppercase;
+
+            letter-spacing:
+                0.08em;
+
+        }
+
+
+        .top-value {
+
+            font-size:
+                32px;
+
+            font-weight:
+                700;
+
+            color:
+                #248a45;
+
+            margin-top:
+                8px;
+
+        }
+
+
+        .confidence {
+
+            margin-top:
+                8px;
+
+            color:
+                #475467;
+
+        }
+
+
+        /* ==================================================
+           TRANSCRIPT
+        ================================================== */
+
+        .transcript-card {
+
+            background:
+                #f8fafc;
+
+            border:
+                1px solid #e4e7ec;
+
+            border-radius:
+                12px;
+
+            padding:
+                20px;
+
+            margin-bottom:
+                25px;
+
+        }
+
+
+        .section-title {
+
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+            color:
+                #344054;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .language-value {
+
+            display:
+                inline-block;
+
+            background:
+                #eaf3ff;
+
+            color:
+                #174a8b;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .transcript-text {
+
+            background:
+                white;
+
+            border:
+                1px solid #e4e7ec;
+
+            border-radius:
+                9px;
+
+            padding:
+                15px;
+
+            font-size:
+                15px;
+
+            line-height:
+                1.7;
+
+            color:
+                #344054;
+
+            white-space:
+                pre-wrap;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        /* ==================================================
+           EMOTION SCORES
+        ================================================== */
+
+        .scores-title {
+
+            font-size:
+                17px;
+
+            font-weight:
+                600;
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .emotion-row {
+
+            margin-bottom:
+                15px;
+
+        }
+
+
+        .emotion-info {
+
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            margin-bottom:
+                6px;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .emotion-name {
+
+            font-weight:
+                600;
+
+        }
+
+
+        .emotion-score {
+
+            color:
+                #667085;
+
+        }
+
+
+        .progress {
+
+            height:
+                9px;
+
+            background:
+                #edf0f5;
+
+            border-radius:
+                10px;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .progress-bar {
+
+            height:
+                100%;
+
+            background:
+                #174a8b;
+
+            border-radius:
+                10px;
+
+            transition:
+                width 0.5s ease;
+
+        }
+
+
+        /* ==================================================
+           STATUS
+        ================================================== */
+
+        .status-card {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            padding:
+                13px 15px;
+
+            background:
+                #f8fafc;
+
+            border:
+                1px solid #e4e7ec;
+
+            border-radius:
+                9px;
+
+            margin-top:
+                20px;
+
+            font-size:
+                13px;
+
+            color:
+                #475467;
+
+        }
+
+
+        .status-dot {
+
+            width:
+                9px;
+
+            height:
+                9px;
+
+            background:
+                #12b76a;
+
+            border-radius:
+                50%;
+
+        }
+
+
+        /* ==================================================
+           ERROR
+        ================================================== */
+
+        .error {
+
+            display:
+                none;
+
+            margin-top:
+                20px;
+
+            padding:
+                15px;
+
+            border-radius:
+                9px;
+
+            background:
+                #fff0f0;
+
+            border:
+                1px solid #f2b8b8;
+
+            color:
+                #b42318;
+
+            line-height:
+                1.5;
+
+        }
+
+
+        /* ==================================================
+           FOOTER
+        ================================================== */
+
+        .note {
+
+            margin-top:
+                20px;
+
+            font-size:
+                12px;
+
+            color:
+                #667085;
+
+            line-height:
+                1.5;
+
+            text-align:
+                center;
+
+        }
+
+
+        /* ==================================================
+           MOBILE
+        ================================================== */
+
+        @media (
+            max-width: 600px
+        ) {
+
+            .container {
+
+                padding:
+                    25px 15px;
+
+            }
+
+
+            .card {
+
+                padding:
+                    20px;
+
+            }
+
+
+            h1 {
+
+                font-size:
+                28px;
+
+            }
+
+
+            .upload-area {
+
+                padding:
+                    30px 15px;
+
+            }
+
+
+            .result-header {
+
+                flex-direction:
+                    column;
+
+                align-items:
+                    flex-start;
+
+            }
+
+
+            .file-name {
+
+                text-align:
+                    left;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==================================================
+         HEADER
+    ================================================== -->
+
+    <div class="header">
+
+        <div class="badge">
+            NHAA AI PROTOTYPE
+        </div>
+
+        <h1>
+            Speech Emotion Assessment
+        </h1>
+
+        <p class="subtitle">
+            Upload a voice recording to analyze
+            emotional characteristics and obtain
+            a multilingual speech transcript.
+        </p>
+
+    </div>
+
+
+    <!-- ==================================================
+         MAIN CARD
+    ================================================== -->
+
+    <div class="card">
+
+
+        <!-- ==================================================
+             UPLOAD
+        ================================================== -->
+
+        <div class="upload-area">
+
+            <div class="upload-icon">
+                🎙️
+            </div>
+
+            <div class="upload-title">
+
+                Upload a voice recording
+
+            </div>
+
+            <div class="upload-description">
+
+                Supported formats:
+                WAV, MP3, M4A, MP4
+
+                <br>
+
+                Recommended:
+                short recordings up to 30 seconds
+
+            </div>
+
+            <input
+                type="file"
+                id="audioFile"
+                accept=".wav,.mp3,.m4a,.mp4"
+            >
+
+        </div>
+
+
+        <!-- ==================================================
+             BUTTON
+        ================================================== -->
+
+        <button
+            id="analyzeButton"
+            class="button"
+            onclick="analyzeAudio()"
+        >
+
+            Analyze Voice
+
+        </button>
+
+
+        <!-- ==================================================
+             LOADING
+        ================================================== -->
+
+        <div
+            id="loading"
+            class="loading"
+        >
+
+            <div class="spinner"></div>
+
+            <strong>
+                Analyzing voice...
+            </strong>
+
+            <p>
+                Running speech emotion analysis
+                and multilingual transcription.
+            </p>
+
+        </div>
+
+
+        <!-- ==================================================
+             ERROR
+        ================================================== -->
+
+        <div
+            id="error"
+            class="error"
+        ></div>
+
+
+        <!-- ==================================================
+             RESULTS
+        ================================================== -->
+
+        <div
+            id="result"
+            class="result"
+        >
+
+
+            <!-- ----------------------------------------------
+                 RESULT HEADER
+            ----------------------------------------------- -->
+
+            <div class="result-header">
+
+                <h2>
+                    Assessment Result
+                </h2>
+
+                <div
+                    id="fileName"
+                    class="file-name"
+                >
+                </div>
+
+            </div>
+
+
+            <!-- ----------------------------------------------
+                 DOMINANT EMOTION
+            ----------------------------------------------- -->
+
+            <div class="top-emotion">
+
+                <div class="top-label">
+
+                    Dominant Expressed Emotion
+
+                </div>
+
+                <div
+                    id="topEmotion"
+                    class="top-value"
+                >
+
+                    —
+
+                </div>
+
+                <div
+                    id="confidence"
+                    class="confidence"
+                >
+
+                    —
+
+                </div>
+
+            </div>
+
+
+            <!-- ----------------------------------------------
+                 TRANSCRIPTION
+            ----------------------------------------------- -->
+
+            <div class="transcript-card">
+
+
+                <div class="section-title">
+
+                    Detected Language
+
+                </div>
+
+
+                <div
+                    id="detectedLanguage"
+                    class="language-value"
+                >
+
+                    —
+
+                </div>
+
+
+                <div class="section-title">
+
+                    Transcript
+
+                </div>
+
+
+                <div
+                    id="transcript"
+                    class="transcript-text"
+                >
+
+                    —
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ----------------------------------------------
+                 EMOTION DISTRIBUTION
+            ----------------------------------------------- -->
+
+            <div class="scores-title">
+
+                Emotion Distribution
+
+            </div>
+
+
+            <div
+                id="emotionList"
+            >
+            </div>
+
+
+            <!-- ----------------------------------------------
+                 STATUS
+            ----------------------------------------------- -->
+
+            <div class="status-card">
+
+                <div class="status-dot"></div>
+
+                <div>
+
+                    Analysis completed successfully.
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ==================================================
+         DISCLAIMER
+    ================================================== -->
+
+    <div class="note">
+
+        Prototype only. Speech emotion classification
+        is an AI-derived signal for future multimodal
+        assessment and is not a clinical diagnosis.
+
+    </div>
+
+
+</div>
+
+
+<script>
+
+
+// ==========================================================
+// ANALYZE AUDIO
+// ==========================================================
+
+async function analyzeAudio() {
+
+
+    const fileInput =
+        document.getElementById(
+            "audioFile"
+        );
+
+
+    const button =
+        document.getElementById(
+            "analyzeButton"
+        );
+
+
+    const loading =
+        document.getElementById(
+            "loading"
+        );
+
+
+    const result =
+        document.getElementById(
+            "result"
+        );
+
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+
+    // ------------------------------------------------------
+    // Validate file
+    // ------------------------------------------------------
+
+    if (
+        !fileInput.files ||
+        fileInput.files.length === 0
+    ) {
+
+        showError(
+            "Please select an audio file first."
+        );
+
+        return;
+
+    }
+
+
+    const file =
+        fileInput.files[0];
+
+
+    // ------------------------------------------------------
+    // Check extension
+    // ------------------------------------------------------
+
+    const allowedExtensions = [
+        ".wav",
+        ".mp3",
+        ".m4a",
+        ".mp4"
+    ];
+
+
+    const fileName =
+        file.name.toLowerCase();
+
+
+    const isAllowed =
+        allowedExtensions.some(
+            extension =>
+                fileName.endsWith(extension)
+        );
+
+
+    if (!isAllowed) {
+
+        showError(
+            "Unsupported file format. " +
+            "Use WAV, MP3, M4A or MP4."
+        );
+
+        return;
+
+    }
+
+
+    // ------------------------------------------------------
+    // Prepare FormData
+    // ------------------------------------------------------
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "file",
+        file
+    );
+
+
+    // ------------------------------------------------------
+    // Reset UI
+    // ------------------------------------------------------
+
+    button.disabled =
+        true;
+
+    button.innerText =
+        "Analyzing...";
+
+
+    loading.style.display =
+        "block";
+
+
+    result.style.display =
+        "none";
+
+
+    error.style.display =
+        "none";
+
+
+    try {
+
+
+        // --------------------------------------------------
+        // Send audio to FastAPI
+        // --------------------------------------------------
+
+        const response =
+            await fetch(
+                "/analyze",
+                {
+                    method: "POST",
+                    body: formData
+                }
+            );
+
+
+        // --------------------------------------------------
+        // Parse response
+        // --------------------------------------------------
+
+        const data =
+            await response.json();
+
+
+        // --------------------------------------------------
+        // Server / HTTP error
+        // --------------------------------------------------
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.error ||
+                `Server returned ${response.status}`
+            );
+
+        }
+
+
+        // --------------------------------------------------
+        // Application error
+        // --------------------------------------------------
+
+        if (!data.success) {
+
+            throw new Error(
+                data.error ||
+                "Analysis failed."
+            );
+
+        }
+
+
+        // --------------------------------------------------
+        // Display
+        // --------------------------------------------------
+
+        displayResults(data);
+
+
+    }
+
+    catch (err) {
+
+        console.error(
+            "Analysis error:",
+            err
+        );
+
+
+        showError(
+            err.message ||
+            "Something went wrong while analyzing the audio."
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.innerText =
+            "Analyze Voice";
+
+
+        loading.style.display =
+            "none";
+
+    }
+
+}
+
+
+// ==========================================================
+// DISPLAY RESULTS
+// ==========================================================
+
+function displayResults(data) {
+
+
+    const result =
+        document.getElementById(
+            "result"
+        );
+
+
+    const fileName =
+        document.getElementById(
+            "fileName"
+        );
+
+
+    const topEmotion =
+        document.getElementById(
+            "topEmotion"
+        );
+
+
+    const confidence =
+        document.getElementById(
+            "confidence"
+        );
+
+
+    const detectedLanguage =
+        document.getElementById(
+            "detectedLanguage"
+        );
+
+
+    const transcript =
+        document.getElementById(
+            "transcript"
+        );
+
+
+    const emotionList =
+        document.getElementById(
+            "emotionList"
+        );
+
+
+    // ------------------------------------------------------
+    // File
+    // ------------------------------------------------------
+
+    fileName.innerText =
+        data.filename || "Uploaded audio";
+
+
+    // ------------------------------------------------------
+    // Emotion
+    // ------------------------------------------------------
+
+    const predictedEmotion =
+        data.emotion?.predicted ||
+        "Unknown";
+
+
+    const emotionConfidence =
+        Number(
+            data.emotion?.confidence || 0
+        );
+
+
+    topEmotion.innerText =
+        formatEmotionName(
+            predictedEmotion
+        );
+
+
+    confidence.innerText =
+        "Confidence: " +
+        (
+            emotionConfidence * 100
+        ).toFixed(1) +
+        "%";
+
+
+    // ------------------------------------------------------
+    // Language
+    // ------------------------------------------------------
+
+    const language =
+        data.transcription?.language ||
+        "Unknown";
+
+
+    detectedLanguage.innerText =
+        language;
+
+
+    // ------------------------------------------------------
+    // Transcript
+    // ------------------------------------------------------
+
+    const transcriptText =
+        data.transcription?.text ||
+        "No transcript returned.";
+
+
+    transcript.innerText =
+        transcriptText;
+
+
+    // ------------------------------------------------------
+    // Emotion scores
+    // ------------------------------------------------------
+
+    emotionList.innerHTML =
+        "";
+
+
+    const scores =
+        data.emotion?.scores || [];
+
+
+    scores.forEach(
+        item => {
+
+
+            const emotion =
+                item.emotion ||
+                item.label ||
+                "Unknown";
+
+
+            const rawScore =
+                Number(
+                    item.score || 0
+                );
+
+
+            const percentage =
+                Math.max(
+                    0,
+                    Math.min(
+                        100,
+                        rawScore * 100
+                    )
+                );
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "emotion-row";
+
+
+            row.innerHTML = `
+
+                <div class="emotion-info">
+
+                    <span class="emotion-name">
+                        ${escapeHtml(
+                            formatEmotionName(
+                                emotion
+                            )
+                        )}
+                    </span>
+
+                    <span class="emotion-score">
+                        ${percentage.toFixed(1)}%
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+
+                    <div
+                        class="progress-bar"
+                        style="width: ${percentage}%"
+                    ></div>
+
+                </div>
+
+            `;
+
+
+            emotionList.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    // ------------------------------------------------------
+    // Show results
+    // ------------------------------------------------------
+
+    result.style.display =
+        "block";
+
+
+    // Scroll smoothly
+    result.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+
+}
+
+
+// ==========================================================
+// FORMAT EMOTION LABEL
+// ==========================================================
+
+function formatEmotionName(
+    emotion
+) {
+
+    if (!emotion) {
+
+        return "Unknown";
+
+    }
+
+
+    return String(
+        emotion
+    )
+
+        .replace(
+            /[_-]/g,
+            " "
+        )
+
+        .replace(
+            /\b\w/g,
+            char =>
+                char.toUpperCase()
+        );
+
+}
+
+
+// ==========================================================
+// ERROR
+// ==========================================================
+
+function showError(
+    message
+) {
+
+
+    const error =
+        document.getElementById(
+            "error"
+        );
+
+
+    error.innerText =
+        message;
+
+
+    error.style.display =
+        "block";
+
+
+    error.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+}
+
+
+// ==========================================================
+// HTML ESCAPING
+// ==========================================================
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+</script>
+
+
+</body>
+
+</html>
